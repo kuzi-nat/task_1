@@ -55,4 +55,3 @@ with mydb.cursor() as cur:
 
 cur.close()
 mydb.close()
-#
