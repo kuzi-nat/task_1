@@ -4,7 +4,7 @@ import json
 import xml.etree.ElementTree as ET
 from dotenv import dotenv_values
 
-from queries import *
+from queries import create_rooms_table_query, create_students_table_query, create_indexes_query, select_queries
 
 
 
@@ -63,7 +63,7 @@ def insert_tables(mydb, rooms_file_path: str, students_file_path: str):
     return 0
 
 
-def queries(mydb):
+def execution_queries(mydb):
     mydb.database = 'hostel'
     output = []
     try:
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     create_database(mydb)
     create_tables(mydb)
     insert_tables(mydb, input('Enter rooms file path: '), input('Enter students file path: '))
-    output = queries(mydb)
+    output = execution_queries(mydb)
     while True:
         choose = int(input('[1] Export to json\n[2] Export to XML\nSelect export file type: '))
         if choose in [1,2]:
