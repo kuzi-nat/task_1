@@ -26,7 +26,15 @@ This Python program is designed to manage a hostel's database. It connects to a 
 3. Choose the export file type (JSON or XML) when prompted.
 4. Enter the desired file name for the export.
 
+## Testing
+The project includes unit tests to verify its functionality. To run the tests, use the following command:
+
+```bash
+python -m unittest
+  ```
+
 ## Files
 - `main.py`: Main Python script containing the program logic.
-- queries.py: Module containing SQL queries used by the program.
-- .env: Environment variables file storing MySQL connection details.
+- `queries.py`: Module containing SQL queries used by the program.
+- `.env`: Environment variables file storing MySQL connection details.
+- `test_main.py`: A unit testing module that checks the functionality of the main script.
