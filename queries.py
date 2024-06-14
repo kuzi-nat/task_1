@@ -1,3 +1,5 @@
+create_db_query = 'CREATE DATABASE {0}'
+
 create_rooms_table_query = '''CREATE TABLE rooms (
 id INT PRIMARY KEY, 
 name VARCHAR(15))'''

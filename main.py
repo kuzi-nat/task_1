@@ -4,7 +4,7 @@ import json
 import xml.etree.ElementTree as ET
 from dotenv import dotenv_values
 
-from queries import create_rooms_table_query, create_students_table_query, create_indexes_query, select_queries
+from queries import create_db_query, create_rooms_table_query, create_students_table_query, create_indexes_query, select_queries
 
 
 
@@ -18,17 +18,17 @@ def connection(host: str, user: str, password: str):
     return mydb
 
 
-def create_database(mydb, create_db_query = 'CREATE DATABASE hostel'):
+def create_database(mydb, name: str):
     try:
         with mydb.cursor() as cur:
-            cur.execute(create_db_query)
+            cur.execute(create_db_query.format(name))
     except Exception as ex:
         return ex
     return 0
 
 
-def create_tables(mydb):
-    mydb.database = 'hostel'
+def create_tables(mydb, name: str):
+    mydb.database = name
     try:
         with mydb.cursor() as cur:
             cur.execute(create_rooms_table_query)
@@ -39,8 +39,8 @@ def create_tables(mydb):
     return 0
 
 
-def insert_tables(mydb, rooms_file_path: str, students_file_path: str):
-    mydb.database = 'hostel'
+def insert_tables(mydb, name: str, rooms_file_path: str, students_file_path: str):
+    mydb.database = name
     try:
         rooms_file = open(rooms_file_path, 'r')
         data_rooms_file = json.load(rooms_file)
@@ -63,8 +63,8 @@ def insert_tables(mydb, rooms_file_path: str, students_file_path: str):
     return 0
 
 
-def execution_queries(mydb):
-    mydb.database = 'hostel'
+def execution_queries(mydb, name: str):
+    mydb.database = name
     output = []
     try:
         for i in range(len(select_queries)):
@@ -98,12 +98,13 @@ def export(output, file_name: str, filetype):
 
 
 if __name__ == '__main__':
-    config = dotenv_values(".env")
-    mydb = connection(config['host'], config['user'], config['password'])
-    create_database(mydb)
-    create_tables(mydb)
-    insert_tables(mydb, input('Enter rooms file path: '), input('Enter students file path: '))
-    output = execution_queries(mydb)
+    config = dotenv_values(".env")  # формируется словарь значений из файла .env
+    mydb = connection(config['db_host'], config['db_user'], config['db_password'])
+    db_name = config['db_name']
+    create_database(mydb, db_name)
+    create_tables(mydb, db_name)
+    insert_tables(mydb, db_name, input('Enter rooms file path: '), input('Enter students file path: '))
+    output = execution_queries(mydb,db_name)
     while True:
         choose = int(input('[1] Export to json\n[2] Export to XML\nSelect export file type: '))
         if choose in [1,2]:

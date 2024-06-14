@@ -18,14 +18,15 @@ This Python program is designed to manage a hostel's database. It connects to a 
    host=your_mysql_host
    user=your_mysql_username
    password=your_mysql_password
+   db_name=your_database_name
    ```
 ## Usage
-1. Run the program by executing python `__main__.py`.
+1. Run the program by executing python `main.py`.
 2. Follow the prompts to enter the file paths for rooms and students data.
 3. Choose the export file type (JSON or XML) when prompted.
 4. Enter the desired file name for the export.
 
 ## Files
-- `__main__.py`: Main Python script containing the program logic.
+- `main.py`: Main Python script containing the program logic.
 - queries.py: Module containing SQL queries used by the program.
 - .env: Environment variables file storing MySQL connection details.
